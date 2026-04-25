@@ -1,0 +1,53 @@
+pyes version: 7.0.0dev
+conn.servers = [ParseResult(scheme='http', netloc='127.0.0.1:9299', path='', params='', query='', fragment='')]
+elasticsearch lib: (9, 3, 0)
+Mapping properties: ['position', 'tag', 'title']
+Index created: pyes-validate-66937623
+Indexed 3 docs
+TermQuery.serialize() = {'term': {'tag': 'person'}}
+MatchAll hits: 3
+TermQuery(tag=person) hits: 2
+BoolQuery hits: 1
+USABLE
+connected: [ParseResult(scheme='http', netloc='127.0.0.1:9299', path='', params='', query='', fragment='')]
+Traceback (most recent call last):
+  File "/home/zhihao/hdd/RepoRescue_Clean/artifacts/pyes/scenario_validate.py", line 40, in <module>
+    conn.index({"level": lvl, "service": svc, "message": msg, "severity": sev},
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+               INDEX, "_doc", id=i)
+               ^^^^^^^^^^^^^^^^^^^^
+  File "/home/zhihao/hdd/RepoRescue_Clean/repos/rescue_gpt-codex/pyes/pyes/es.py", line 867, in index
+    return self._send_request(request_method, path, doc, querystring_args)
+           ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/zhihao/hdd/RepoRescue_Clean/repos/rescue_gpt-codex/pyes/pyes/es.py", line 606, in _send_request
+    raise_if_error(status, decoded)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/home/zhihao/hdd/RepoRescue_Clean/repos/rescue_gpt-codex/pyes/pyes/convert_errors.py", line 93, in raise_if_error
+    raise exceptions.ElasticSearchException(error, status, result, request)
+pyes.exceptions.ElasticSearchException: Incorrect HTTP method for uri [/pyes-scenario-7fd58386/_doc] and method [PUT], allowed: [POST]
+connected: [ParseResult(scheme='http', netloc='127.0.0.1:9299', path='', params='', query='', fragment='')]
+MatchAll total: 50
+ERROR docs: 0 (expected 19)
+Traceback (most recent call last):
+  File "/home/zhihao/hdd/RepoRescue_Clean/artifacts/pyes/scenario_validate.py", line 54, in <module>
+    assert len(err_hits) == n_error, (len(err_hits), n_error)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: (0, 19)
+connected: [ParseResult(scheme='http', netloc='127.0.0.1:9299', path='', params='', query='', fragment='')]
+MatchAll total: 50
+ERROR docs: 19 (expected 19)
+ERROR+billing: 5 (expected 5)
+page1 size: 10
+page5 size: 10
+SCENARIO_PASS
+--- BUG-1: dead port ---
+BUG-1 OK: dead port raises ConnectionError
+--- BUG-2: unicode round-trip ---
+BUG-2 OK: round-trip preserves multi-script unicode
+--- BUG-3: 5x ES() ---
+BUG-3 OK: 5x parallel ES() handles all return correct results
+--- BUG-4: pyes.utils.imports import ---
+BUG-4 FOUND: pyes/utils/imports.py:17 still has `import imp` -> No module named 'imp'
+--- BUG-5: conn.connection.info() (direct ES client) ---
+BUG-5 FOUND: gpt-codex's __perform_request monkey-patch missing kwargs -> ES.__perform_request() got an unexpected keyword argument 'headers'
+BUGHUNT_DONE; trap_found=True direct_bug=True
